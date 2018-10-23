@@ -12,8 +12,10 @@ Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.cl
 # Инструкция по использованию:
 1. Рекомендую зайти в iCloud, создать папку для книги (при сохранении можно использовать только ранее созданные папки) 
  Например, создать папку `Shortcuts/Audiobooks`, в которой потом накапливать аудиокниги
+ 
 ![create AudioBooks folder Shortcuts folder in Files](/createAudioBooksFolder.gif)
 * можно создать папку для конкретной книги внутри неё - это удобно, если у книг много глав: главы разных книг не смешиваются
+
 ![create BookName folder in Shortcuts/AudioBooks](/createBookNameFolder.gif)
 2. В Safari зайти на страницу конкретной книги и включить `"По главам"` (под списком треков), если выключено. Иначе загрузится только несколько секунд аудио.
 3. Нажать поделиться, и выбрать `Команды->AudioBooks.Club`
