@@ -5,7 +5,7 @@ Siri Shortcut for downloading books from audioknigi.club into iCloud
 А я издавна мучаюсь от неудобства быстро и бесплатно скачать аудиокниги на iPhone/iPad без использования компьютера.
 Теперь есть решение: AudioKnigi.Club shortcut (Команда) для iOS 12+!
 
-Собственно, можно скачать [.shortcut-файл](https://github.com/Akhrameev/AudioknigiClubSiriShortcut/raw/master/AudioKnigi.Club.shortcut) из этого репозитория и, следую инструкции, получится скачивать аудиокниги прямо на iPhone/iPad (с сайта [audioknigi.club](https://audioknigi.club)).
+Собственно, можно скачать [.shortcut-файл](https://github.com/Akhrameev/AudioknigiClubSiriShortcut/raw/master/AudioKnigi.Club.shortcut) из этого репозитория и, следуя инструкции, получится скачивать аудиокниги прямо на iPhone/iPad (с сайта [audioknigi.club](https://audioknigi.club)).
 
 Важно: нужно перед загрузкой включить переключатель `"По главам"` и создать папку `Shortcuts/AudioBooks` в iCloud (или включить "Спросить о месте сохранения" в последней команде).
 
