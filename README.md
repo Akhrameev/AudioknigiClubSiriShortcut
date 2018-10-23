@@ -1,4 +1,4 @@
-# AudioknigiClubSiriShortcut
+# AudioKnigi.Club Siri Shortcut
 Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.club) into iCloud
 
 Итак, Apple анонсировала крутую фичу Команды для автоматизации рутины на iPhone и iPad.
