@@ -19,7 +19,7 @@ Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.cl
 
 Код выглядит примерно так: 
 
-```
+```javascript
 var result = [];
 
 var player = document.getElementsByClassName("jp-jplayer")[0];  // нашли на странице плеер
