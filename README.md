@@ -11,6 +11,35 @@ Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.cl
 
 **Важно:** нужно перед загрузкой включить переключатель `"По главам"`, иначе скачается только несколько секунд аудио.
 
+**Перед использованием возникнет такое уведомление о потенциальной зловредности JavaScript-кода**
+
+![javascript alert image](/javascriptAlert.jpg)
+
+Бояться его не стоит - код я старался оставить там тривиальный. Он НЕ лезет в ваши персональные данные, НЕ крадёт пароли, cookies и т.п.
+
+Код выглядит примерно так: 
+
+```
+var result = [];
+
+var player = document.getElementsByClassName("jp-jplayer")[0];  // нашли на странице плеер
+var playlistItems = document.getElementsByClassName("jp-playlist-item"); // нашли на странице список треков
+
+for (let item of playlistItems) {
+  item.click(); // нажали на трек, чтобы его url появился в плеере 
+
+  var audio = player.getElementsByTagName("audio")[0]; // в этом элементе есть название трека и url для загрузки
+
+  result.push({"title": audio.title, "url":audio.src});
+}
+
+document.getElementsByClassName("jp-pause")[0].click(); // после выполнения скрипта поставил плеер на паузу
+
+// Call completion to finish
+completion(JSON.stringify(result)); // собранный список названий и url-ов отпраивл в Siri Shortcut в формате JSON
+```
+Его прекрасно видно в `plist-`файле в репозитории. И в самой команде перед запуском.
+
 ## Инструкция по использованию:
 1. Рекомендую зайти в iCloud, создать папку для книги (при сохранении можно использовать только ранее созданные папки) 
  Например, создать папку `Shortcuts/Audiobooks`, в которой потом накапливать аудиокниги
