@@ -13,7 +13,7 @@ Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.cl
 
 **Перед использованием возникнет такое уведомление о потенциальной зловредности JavaScript-кода**
 
-![javascript alert image](/javascriptAlert.jpg){:height="50%" width="50%"}
+<img src="/javascriptAlert.jpg" width="50%" height="50%">
 
 Бояться его не стоит - код я старался оставить там тривиальный. Он НЕ лезет в ваши персональные данные, НЕ крадёт пароли, cookies и т.п.
 
