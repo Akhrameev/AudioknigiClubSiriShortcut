@@ -10,22 +10,51 @@
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>WFCommentActionText</key>
-				<string>Для сохранения аудиокниг с сайта audioknigi.club Важно: нужно перед загрузкой включить переключатель "По главам"
+				<string>Автор @akhrameev
+
+Еще больше шорткатов на канале 
+https://t-do.ru/iOSshortcut 
+Twitter: @iOSshortcut</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>Для сохранения аудиокниг с сайта audioknigi.club в iCloud (в папку Shortcuts/AudioBooks)
+Важно: нужно перед загрузкой включить переключатель "По главам"ф
+Если книга закрыта правообладателем, скачать её не получится (будет ошибка "Истекло время ожидания JavaScript").
 
 Инструкция по использованию:
-1. Рекомендую зайти в iCloud, создать папку для книги (при сохранении можно использовать только ранее созданные папки)
-2. В Safari зайти на страницу конкретной книги и включить "По главам" (под списком треков), если выключено. Иначе загрузится только несколько секунд аудио.
+1. В Safari зайти на страницу конкретной книги и включить "По главам" (под списком треков), если выключено. Иначе загрузится только несколько секунд аудио.
 3. Нажать поделиться, и выбрать Команды-&gt;AudioBooks.Club
 4. Профит (не сворачивайте Safari до завершения загрузки - иначе работа Команды прервётся и нужно будет начинать с начала)
 
 Известные проблемы: 
 1. "Истекло время ожидания JavaScript"
-Книга закрыта правообладателем; возможно мешает онлайн-радио или другая аудио-активность в другой вкладке.
+Возможно, скрипт не успел выполнить все действия click() - хотя почти всю полезную работу успел сделать.
+Это можно увидеть по изменившемуся блоку под списком треков. Если там появился текст "{bookTitle:..." - значит, повезло. Смело долго жмём на него и копируем в буфер обмена. Запускаем шорткат ещё раз - но уже из программы Команды. Она считает результат из буфера обмена и сможет скачать аудиокниги даже при свёрнутом Safari (не закрывайте приложение Команды, свернуть можно).
+Если блок под списко мвоспроизведения мешает - его можно легко убрать обновлением страницы.
+
 2. Воспроизведение из iCloud: стандартный плеер не переключается сам между главами и приходится переключать вручную. Решение: использовать Readdle Documents или VLC для воспроизведения аудиокниг из iCloud. Или сохранять через iCloud в Dropbox и воспроизводить через плеер, поддерживающий Dropbox.
 P.S. Можно плюсануть мой пулл-реквест в VLC iOS (https://github.com/videolan/vlc-ios/pull/160), чтобы VLC открывал сразу всю папку с аудиокнигой.
 
-Source: https://github.com/Akhrameev/AudioknigiClubSiriShortcut
-</string>
+Source: https://github.com/Akhrameev/AudioknigiClubSiriShortcut</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>353FCEF8-1AC8-4408-BC1F-13502737DC68</string>
+				<key>WFConditionalActionString</key>
+				<string>audioknigi.club</string>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -36,23 +65,83 @@ Source: https://github.com/Akhrameev/AudioknigiClubSiriShortcut
 				<key>UUID</key>
 				<string>DF4FCE25-CA25-4744-9616-9E81899334BD</string>
 				<key>WFJavaScript</key>
-				<string>var result = [];
-
-var player = document.getElementsByClassName("jp-jplayer")[0];
+				<string>var player = document.getElementsByClassName("jp-jplayer")[0];
 var playlistItems = document.getElementsByClassName("jp-playlist-item");
+var bookTitle = document.title;
+bookTitle = bookTitle.replace(". Слушать аудиокнигу онлайн", "");
 
+var items = [];
+var min = 0;
+var i = 0;
+var max = 1000;
 for (let item of playlistItems) {
+  i++;
+
+if (i &lt; min){continue;}
+if (i &gt; max){continue;}
+
   item.click();
 
   var audio = player.getElementsByTagName("audio")[0];
-
-  result.push({"title": audio.title, "url":audio.src});
+  items.push({"title": audio.title, "url":audio.src});
 }
+
+var result = {"bookTitle": bookTitle, "items": items};
+
+var json = 
+JSON.stringify(result);
+
+
+var playerBottom = document.getElementsByClassName("player-bottom")[0];
+
+playerBottom.innerHTML = "";
+
+
+var el = document.createElement('textarea');
+    el.value = json;
+    playerBottom.appendChild(el);
 
 document.getElementsByClassName("jp-pause")[0].click();
 
 // Call completion to finish
-completion(JSON.stringify(result));</string>
+completion(json);</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>353FCEF8-1AC8-4408-BC1F-13502737DC68</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getclipboard</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>353FCEF8-1AC8-4408-BC1F-13502737DC68</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.setvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariableName</key>
+				<string>Book</string>
 			</dict>
 		</dict>
 		<dict>
@@ -61,18 +150,7 @@ completion(JSON.stringify(result));</string>
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>UUID</key>
-				<string>09ECFA0F-F6A5-42A5-A9BD-D09896DAF68C</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.repeat.each</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>0509B251-9294-478E-80DC-24229A565155</string>
-				<key>WFControlFlowMode</key>
-				<integer>0</integer>
+				<string>075961EC-D3BA-429A-8D41-C8C304D91CCC</string>
 			</dict>
 		</dict>
 		<dict>
@@ -81,42 +159,99 @@ completion(JSON.stringify(result));</string>
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>UUID</key>
-				<string>A46D914E-579B-44FE-8595-007960BB6FC4</string>
+				<string>475763BC-DCB8-40CC-8828-FF1F41C34C68</string>
 				<key>WFDictionaryKey</key>
-				<string>url</string>
+				<string>bookTitle</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.downloadurl</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>Advanced</key>
-				<false/>
-				<key>UUID</key>
-				<string>8E73B594-6A78-48AC-B90B-DD410CB7CB50</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.appendvariable</string>
+			<string>is.workflow.actions.setvariable</string>
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>WFVariableName</key>
-				<string>DownloadedFiles</string>
+				<string>BookTitle</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.repeat.each</string>
+			<string>is.workflow.actions.gettext</string>
 			<key>WFWorkflowActionParameters</key>
 			<dict>
-				<key>GroupingIdentifier</key>
-				<string>0509B251-9294-478E-80DC-24229A565155</string>
 				<key>UUID</key>
-				<string>88EC25A0-87E7-4D32-B8AA-1CE5D467C3BA</string>
-				<key>WFControlFlowMode</key>
-				<integer>2</integer>
+				<string>5FC0B39F-6209-4870-BA98-C7E9B9ED3089</string>
+				<key>WFTextActionText</key>
+				<string>AudioBooks</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.setvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariableName</key>
+				<string>AudioBooksDirectory</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.file.createfolder</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFFilePath</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict>
+							<key>{0, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>AudioBooksDirectory</string>
+							</dict>
+						</dict>
+						<key>string</key>
+						<string>￼</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.file.createfolder</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFFilePath</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict>
+							<key>{0, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>AudioBooksDirectory</string>
+							</dict>
+							<key>{2, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>BookTitle</string>
+							</dict>
+						</dict>
+						<key>string</key>
+						<string>￼/￼</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
 			</dict>
 		</dict>
 		<dict>
@@ -131,7 +266,7 @@ completion(JSON.stringify(result));</string>
 						<key>Type</key>
 						<string>Variable</string>
 						<key>VariableName</key>
-						<string>DownloadedFiles</string>
+						<string>Book</string>
 					</dict>
 					<key>WFSerializationType</key>
 					<string>WFTextTokenAttachment</string>
@@ -140,17 +275,249 @@ completion(JSON.stringify(result));</string>
 		</dict>
 		<dict>
 			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvalueforkey</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>118EAC81-E349-435E-B193-B4F0838577C8</string>
+				<key>WFDictionaryKey</key>
+				<string>items</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.repeat.each</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>6A8874B7-B781-44E9-BA43-B22291047DB2</string>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.setvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariableName</key>
+				<string>Chapter</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvalueforkey</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>9FABAEB0-F281-4CB2-B3F6-CB2861579A32</string>
+				<key>WFDictionaryKey</key>
+				<string>title</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.setvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariableName</key>
+				<string>ChapterTitle</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.documentpicker.open</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>3EEF45F4-B177-40A3-BFFC-01A297E9713C</string>
+				<key>WFFileErrorIfNotFound</key>
+				<false/>
+				<key>WFGetFilePath</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict>
+							<key>{0, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>AudioBooksDirectory</string>
+							</dict>
+							<key>{2, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>BookTitle</string>
+							</dict>
+							<key>{4, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>ChapterTitle</string>
+							</dict>
+						</dict>
+						<key>string</key>
+						<string>￼/￼/￼</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
+				<key>WFShowFilePicker</key>
+				<false/>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.properties.files</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>900FD6C2-DCED-4F36-81A8-7F1F4A076DE1</string>
+				<key>WFContentItemPropertyName</key>
+				<string>File Size</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>64FAC21D-B971-4051-AB78-909344223A42</string>
+				<key>WFCondition</key>
+				<string>Is Greater Than</string>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+				<key>WFNumberValue</key>
+				<real>0.0</real>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>64FAC21D-B971-4051-AB78-909344223A42</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariable</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>Type</key>
+						<string>Variable</string>
+						<key>VariableName</key>
+						<string>Chapter</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenAttachment</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvalueforkey</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>90B83F53-4C5F-4431-9476-F88BF437AA3B</string>
+				<key>WFDictionaryKey</key>
+				<string>url</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.downloadurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>Advanced</key>
+				<false/>
+				<key>UUID</key>
+				<string>025ED248-BE29-41CF-ABF1-016970BCD64E</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
 			<string>is.workflow.actions.documentpicker.save</string>
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>UUID</key>
-				<string>8B95CECE-4C5A-45F3-ACD4-1538EB1E0B3B</string>
+				<string>CC2DFA14-8FB5-4179-BF3F-B572A4A2D57D</string>
 				<key>WFAskWhereToSave</key>
-				<true/>
-				<key>WFFileDestinationPath</key>
-				<string></string>
-				<key>WFSaveFileOverwrite</key>
 				<false/>
+				<key>WFFileDestinationPath</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict>
+							<key>{0, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>AudioBooksDirectory</string>
+							</dict>
+							<key>{2, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>BookTitle</string>
+							</dict>
+							<key>{4, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>ChapterTitle</string>
+							</dict>
+						</dict>
+						<key>string</key>
+						<string>￼/￼/￼</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>64FAC21D-B971-4051-AB78-909344223A42</string>
+				<key>UUID</key>
+				<string>375B65D2-F1ED-4535-A6AD-C8A256D3E4EA</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.repeat.each</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>6A8874B7-B781-44E9-BA43-B22291047DB2</string>
+				<key>UUID</key>
+				<string>9158EB4A-D6FF-4F9D-BCC1-AC7BC3C3356B</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
 			</dict>
 		</dict>
 	</array>
