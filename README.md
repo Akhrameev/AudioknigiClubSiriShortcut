@@ -21,55 +21,66 @@ Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.cl
 Код выглядит примерно так: 
 
 ```javascript
-var result = [];
-
-var player = document.getElementsByClassName("jp-jplayer")[0];  // нашли на странице плеер
-var playlistItems = document.getElementsByClassName("jp-playlist-item"); // нашли на странице список треков
-
-for (let item of playlistItems) {
-  item.click(); // нажали на трек, чтобы его url появился в плеере 
-
-  var audio = player.getElementsByTagName("audio200")[0]; // в этом элементе есть название трека и url для загрузки
-
-  result.push({"title": audio.title, "url":audio.src});
-}
-
-document.getElementsByClassName("jp-pause")[0].click(); // после выполнения скрипта поставил плеер на паузу
-
-// Call completion to finish
-completion(JSON.stringify(result)); // собранный список названий и url-ов отпраивл в Siri Shortcut в формате JSON
-
 var player = document.getElementsByClassName("jp-jplayer")[0];  // нашли на странице плеер
 var playlistItems = document.getElementsByClassName("jp-playlist-item");  // нашли на странице список треков
 var bookTitle = document.title; // взяли название страницы для того, чтобы использовать в качестве названия книги
 bookTitle = bookTitle.replace(". Слушать аудиокнигу онлайн", ""); // в конце названия может быть вот такой лишний текст
 
-var items = [];   // здесь будем накапливать данные глав (название файла и url для загрузки)
-var min = 0;      // можно указать значение больше 0 для пропуска первых min глав
-var i = 0;      
-var max = 1000;   // можно указать другое значение для пропуска глав после max
-for (let item of playlistItems) {
+var items = []; // здесь будем накапливать данные глав (название файла и url для загрузки)
+var min = 0;  // можно указать значение больше 0 для пропуска первых min глав
+var i = 0;
+var max = 1000; // можно указать другое значение для пропуска глав после max
+for (let item of playlistItems) 
+{
   i++;
 
   if (i < min){continue;}
   if (i > max){continue;}
 
-  item.click(); // нажали на трек, чтобы его название и url появился в плеере 
+  item.click(); // нажали на трек, чтобы его название и url появился в плеере
 
   var audio = player.getElementsByTagName("audio")[0];  // в этом элементе есть название трека и url для загрузки
   items.push({"title": audio.title, "url":audio.src});
 }
 
 var result = {"bookTitle": bookTitle, "items": items};  // собрали в структуру название книги и данные глав
+
 var json = JSON.stringify(result);
+
 
 var playerBottom = document.getElementsByClassName("player-bottom")[0]; // взяли элемент под списком воспроизведения
 playerBottom.innerHTML = "";  // убрали из него прежние данные (в том числе переключатель "По главам")
 
 var el = document.createElement('textarea');  // создали элемент, из которого можно копировать длинный текст
 el.value = json;
+
+el.contentEditable = true;
+el.readOnly = true;
+
 playerBottom.appendChild(el); // добавили его под список треков
 
+var button = document.createElement("input");
+button.type = "button";
+button.value = "Копировать";
+button.onclick = function()
+{
+  // Я не javscript-нинзя, но так можно скопировать текст в буфер обмена
+  var range = document.createRange();
+  range.selectNodeContents(el);
+
+  // select the range
+  var selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  el.setSelectionRange(0, 999999);
+
+  // Собственно, само копирование
+  document.execCommand('copy');
+
+  alert("Скопировано в буфер обмена. Запустите эту команду из списка приложения Команды (а не из Safari)");
+};
+
+playerBottom.appendChild(button); // добавили и кнопку под список треков
 document.getElementsByClassName("jp-pause")[0].click(); // нажали на кнопку "Пауза", чтобы звук последней галвы не сердил во время загрузки
 
 // Call completion to finish
