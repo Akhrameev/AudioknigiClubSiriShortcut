@@ -1,5 +1,5 @@
 # AudioKnigi.Club Siri Shortcut
-Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.club) into iCloud
+Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.club) and [akniga.org](https://akniga.org) into iCloud
 
 ## Введение
 
