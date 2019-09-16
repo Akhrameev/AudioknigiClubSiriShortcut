@@ -5,9 +5,9 @@ Siri Shortcut for downloading books from [audioknigi.club](https://audioknigi.cl
 
 Итак, Apple анонсировала крутую фичу Команды для автоматизации рутины на iPhone и iPad.
 А я издавна мучаюсь от неудобства быстро и бесплатно скачать аудиокниги на iPhone/iPad без использования компьютера.
-Теперь есть решение: AudioKnigi.Club shortcut (Команда) для iOS 12+!
+Теперь есть решение: AudioKnigi.Club shortcut (Команда) для iOS 12!
 
-Собственно, можно скачать [.shortcut-файл](https://github.com/Akhrameev/AudioknigiClubSiriShortcut/raw/master/AudioKnigi.Club.shortcut) из этого репозитория и, следуя инструкции, получится скачивать аудиокниги прямо на iPhone/iPad (с сайта [audioknigi.club](https://audioknigi.club)).
+Собственно, можно скачать [.shortcut-файл](https://github.com/Akhrameev/AudioknigiClubSiriShortcut/raw/master/AudioKnigi.Club.shortcut) из этого репозитория и, следуя инструкции, получится скачивать аудиокниги прямо на iPhone/iPad (с сайта [audioknigi.club](https://audioknigi.club) или его зеркала [akniga.org](https://akniga.org)).
 
 **Важно:** нужно перед загрузкой включить переключатель `"По главам"`, иначе скачается только несколько секунд аудио.
 Если книга закрыта правообладателем, скачать её не получится (будет ошибка "Истекло время ожидания JavaScript").
