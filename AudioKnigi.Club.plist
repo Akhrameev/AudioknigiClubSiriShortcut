@@ -24,13 +24,16 @@ Twitter: @iOSshortcut</string>
 			<dict>
 				<key>WFCommentActionText</key>
 				<string>Для сохранения аудиокниг с сайта audioknigi.club в iCloud (в папку Shortcuts/AudioBooks)
-Важно: нужно перед загрузкой включить переключатель "По главам"
+Поддерживается также зеркало akniga.org (так как audioknigi.club перестал быть доступен в РФ).
+Важно: нужно перед загрузкой нажать "Показать оглавление" (под кнопкой с комментариями), иначе аудиокнига не загрузится.
 Если книга закрыта правообладателем, скачать её не получится (будет ошибка "Истекло время ожидания JavaScript").
 
 Инструкция по использованию:
-1. В Safari зайти на страницу конкретной книги и включить "По главам" (под списком треков), если выключено. Иначе загрузится только несколько секунд аудио.
-3. Нажать поделиться, и выбрать Команды-&gt;AudioKnigi.Club
-4. Профит (не сворачивайте Safari до завершения загрузки - иначе работа Команды прервётся и нужно будет начинать с начала)
+1. В Safari зайти на страницу конкретной книги и нажать "Показать оглавление".
+2. Нажать поделиться, и выбрать Команды-&gt;AudioKnigi.Club
+3. Команда запросит доступ к bit.ly (для проверки наличия обновлений) и к данным сайта для загрузки файлов книги - не пугаемся и разрешаем доступ
+4. Профит (не сворачивайте Safari до завершения загрузки - иначе работа Команды прервётся и нужно будет начинать с начала) 
+
 
 Известные проблемы: 
 1. "Истекло время ожидания JavaScript"
@@ -43,9 +46,474 @@ Twitter: @iOSshortcut</string>
 
 3. Воспроизведение из iCloud: стандартный плеер не переключается сам между главами и приходится переключать вручную. 
 Решение: использовать Readdle Documents или VLC для воспроизведения аудиокниг из iCloud. Или сохранять через iCloud в Dropbox (можно изменить в поле "Служба") и воспроизводить через плеер, поддерживающий Dropbox.
-VLC версии 3.1.4 умеет открывать сразу всю папку из iCloud. Но пока пишет действия (Открыть, Выбрать, Отменить, стрелочку Назад) белым по белому. Ждём обновления, тыкаем наугад или читаем инструкцию в репозитории (ссылка ниже).
 
 Source: https://github.com/Akhrameev/AudioknigiClubSiriShortcut</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.gettext</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>F4157E70-E040-4E12-9A58-A3FC23F715A0</string>
+				<key>WFTextActionText</key>
+				<string>3</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.setvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariableName</key>
+				<string>Version</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.url</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>69D52DCC-3559-48FB-8607-EA924F2B01F0</string>
+				<key>WFURLActionURL</key>
+				<string>http://bit.ly/2EV5jOX_version</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.downloadurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>57DB6A7B-E910-4133-96FC-22CA3381E9EC</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.detect.dictionary</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>331B80CF-8B80-48E2-A4AF-275025F07245</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvalueforkey</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>341FDAC5-1678-43FA-8D0A-C6719E8FC76F</string>
+				<key>WFDictionaryKey</key>
+				<string>version</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>DF3685FD-84B8-4950-94B7-07D084DF68D4</string>
+				<key>WFCondition</key>
+				<string>Equals</string>
+				<key>WFConditionalActionString</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict>
+							<key>{0, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>Version</string>
+							</dict>
+						</dict>
+						<key>string</key>
+						<string>￼</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>DF3685FD-84B8-4950-94B7-07D084DF68D4</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getdevicedetails</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>A42F04C9-52D1-4862-AB41-E2E7C4CD05B7</string>
+				<key>WFDeviceDetail</key>
+				<string>System Version</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>89300BD4-99D0-4FAA-AF82-4490DB71D725</string>
+				<key>WFConditionalActionString</key>
+				<string>12</string>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+				<key>WFMenuItems</key>
+				<array>
+					<string>Обновить</string>
+					<string>Продолжить</string>
+				</array>
+				<key>WFMenuPrompt</key>
+				<string>Появилась новая версия команды</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+				<key>WFMenuItemTitle</key>
+				<string>Обновить</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.gettext</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>D0A27D10-5CE8-4336-968E-2647D1AC1BD6</string>
+				<key>WFTextActionText</key>
+				<string>AudioKnigi.Club</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.setvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariableName</key>
+				<string>ShortcutName</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.url</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>55C5B410-E47F-44FE-B43D-21D2348F95C1</string>
+				<key>WFURLActionURL</key>
+				<string>bit.ly/2ziebYL_shortcut</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.downloadurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>DEA193A6-B6B8-4EB1-9389-086F645346C3</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.base64encode</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>96E99414-ED8B-4DAD-B716-34BE506AE96E</string>
+				<key>WFBase64LineBreakMode</key>
+				<string>None</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.url</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>23298993-9D92-44B6-A504-CD8F99003B0D</string>
+				<key>WFURLActionURL</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict>
+							<key>{33, 1}</key>
+							<dict>
+								<key>Type</key>
+								<string>Variable</string>
+								<key>VariableName</key>
+								<string>ShortcutName</string>
+							</dict>
+							<key>{65, 1}</key>
+							<dict>
+								<key>OutputName</key>
+								<string>Кодированный Base64 файл</string>
+								<key>OutputUUID</key>
+								<string>96E99414-ED8B-4DAD-B716-34BE506AE96E</string>
+								<key>Type</key>
+								<string>ActionOutput</string>
+							</dict>
+						</dict>
+						<key>string</key>
+						<string>shortcuts://import-shortcut?name=￼&amp;url=data:text/shortcut;base64,￼</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.openurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.exit</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+				<key>WFMenuItemTitle</key>
+				<string>Продолжить</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
+				<key>UUID</key>
+				<string>AFCDF8FB-FC33-44E3-8375-7F8B81845E20</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>89300BD4-99D0-4FAA-AF82-4490DB71D725</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariable</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>OutputName</key>
+						<string>Словарь</string>
+						<key>OutputUUID</key>
+						<string>331B80CF-8B80-48E2-A4AF-275025F07245</string>
+						<key>Type</key>
+						<string>ActionOutput</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenAttachment</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvalueforkey</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>7A607F40-20B7-4DDD-83D6-449273DE8989</string>
+				<key>WFDictionaryKey</key>
+				<string>icloud</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>47843619-2261-4EAD-87B4-81E4AB955E1B</string>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+				<key>WFMenuItems</key>
+				<array>
+					<string>Обновить</string>
+					<string>Продолжить</string>
+				</array>
+				<key>WFMenuPrompt</key>
+				<string>Появилась новая версия команды</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>47843619-2261-4EAD-87B4-81E4AB955E1B</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+				<key>WFMenuItemTitle</key>
+				<string>Обновить</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>Запрос для подсчета статистики обновлений </string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.url</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFURLActionURL</key>
+				<string>bit.ly/2ziebYL_shortcut</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.downloadurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>Advanced</key>
+				<false/>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getvariable</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFVariable</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>OutputName</key>
+						<string>Значение словаря</string>
+						<key>OutputUUID</key>
+						<string>7A607F40-20B7-4DDD-83D6-449273DE8989</string>
+						<key>Type</key>
+						<string>ActionOutput</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenAttachment</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.openurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.exit</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>47843619-2261-4EAD-87B4-81E4AB955E1B</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+				<key>WFMenuItemTitle</key>
+				<string>Продолжить</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.choosefrommenu</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>47843619-2261-4EAD-87B4-81E4AB955E1B</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>89300BD4-99D0-4FAA-AF82-4490DB71D725</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>DF3685FD-84B8-4950-94B7-07D084DF68D4</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -267,8 +735,8 @@ Source: https://github.com/Akhrameev/AudioknigiClubSiriShortcut</string>
 				<key>UUID</key>
 				<string>DF4FCE25-CA25-4744-9616-9E81899334BD</string>
 				<key>WFJavaScript</key>
-				<string>var player = document.getElementsByClassName("jp-jplayer")[0];
-var playlistItems = document.getElementsByClassName("jp-playlist-item");
+				<string>var gotPlayer = document.getElementsByClassName("plyr")[0];
+var playlistItems = document.getElementsByClassName("chapter__default");
 var bookTitle = document.title;
 bookTitle = bookTitle.replace(". Слушать аудиокнигу онлайн", "");
 
@@ -279,12 +747,14 @@ var max = 1000;
 for (let item of playlistItems) {
   i++;
 
+if (item.clientHeight == 0){continue;}
+
 if (i &lt; min){continue;}
 if (i &gt; max){continue;}
 
   item.click();
 
-  var audio = player.getElementsByTagName("audio")[0];
+  var audio = gotPlayer.getElementsByTagName("audio")[0];
   items.push({"title": audio.title, "url":audio.src});
 }
 
@@ -294,7 +764,7 @@ var json =
 JSON.stringify(result);
 
 
-var playerBottom = document.getElementsByClassName("player-bottom")[0];
+var playerBottom = document.getElementsByClassName("book--bottom")[0];
 
 playerBottom.innerHTML = "";
 
@@ -330,7 +800,7 @@ alert("Скопировано в буфер обмена. Запустите э�
 };
 
 playerBottom.appendChild(button);
-document.getElementsByClassName("jp-pause")[0].click();
+document.getElementsByClassName("button__player button__player--play")[0].click();
 
 // Call completion to finish
 completion(json);</string>
@@ -396,269 +866,6 @@ completion(json);</string>
 			<dict>
 				<key>WFVariableName</key>
 				<string>BookTitle</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.gettext</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>F4157E70-E040-4E12-9A58-A3FC23F715A0</string>
-				<key>WFTextActionText</key>
-				<string>2</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.setvariable</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>WFVariableName</key>
-				<string>Version</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.url</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>69D52DCC-3559-48FB-8607-EA924F2B01F0</string>
-				<key>WFURLActionURL</key>
-				<string>http://bit.ly/2EV5jOX_version</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.downloadurl</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>57DB6A7B-E910-4133-96FC-22CA3381E9EC</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.detect.dictionary</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>331B80CF-8B80-48E2-A4AF-275025F07245</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.getvalueforkey</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>341FDAC5-1678-43FA-8D0A-C6719E8FC76F</string>
-				<key>WFDictionaryKey</key>
-				<string>version</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.conditional</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>DF3685FD-84B8-4950-94B7-07D084DF68D4</string>
-				<key>WFCondition</key>
-				<string>Equals</string>
-				<key>WFConditionalActionString</key>
-				<dict>
-					<key>Value</key>
-					<dict>
-						<key>attachmentsByRange</key>
-						<dict>
-							<key>{0, 1}</key>
-							<dict>
-								<key>Type</key>
-								<string>Variable</string>
-								<key>VariableName</key>
-								<string>Version</string>
-							</dict>
-						</dict>
-						<key>string</key>
-						<string>￼</string>
-					</dict>
-					<key>WFSerializationType</key>
-					<string>WFTextTokenString</string>
-				</dict>
-				<key>WFControlFlowMode</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.conditional</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>DF3685FD-84B8-4950-94B7-07D084DF68D4</string>
-				<key>WFControlFlowMode</key>
-				<integer>1</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.choosefrommenu</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
-				<key>WFControlFlowMode</key>
-				<integer>0</integer>
-				<key>WFMenuItems</key>
-				<array>
-					<string>Обновить</string>
-					<string>Продолжить</string>
-				</array>
-				<key>WFMenuPrompt</key>
-				<string>Появилась новая версия команды</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.choosefrommenu</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
-				<key>WFControlFlowMode</key>
-				<integer>1</integer>
-				<key>WFMenuItemTitle</key>
-				<string>Обновить</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.gettext</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>D0A27D10-5CE8-4336-968E-2647D1AC1BD6</string>
-				<key>WFTextActionText</key>
-				<string>AudioKnigi.Club</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.setvariable</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>WFVariableName</key>
-				<string>ShortcutName</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.url</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>55C5B410-E47F-44FE-B43D-21D2348F95C1</string>
-				<key>WFURLActionURL</key>
-				<string>bit.ly/2ziebYL_shortcut</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.downloadurl</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>DEA193A6-B6B8-4EB1-9389-086F645346C3</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.base64encode</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>UUID</key>
-				<string>96E99414-ED8B-4DAD-B716-34BE506AE96E</string>
-				<key>WFBase64LineBreakMode</key>
-				<string>None</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.url</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>WFURLActionURL</key>
-				<dict>
-					<key>Value</key>
-					<dict>
-						<key>attachmentsByRange</key>
-						<dict>
-							<key>{33, 1}</key>
-							<dict>
-								<key>Type</key>
-								<string>Variable</string>
-								<key>VariableName</key>
-								<string>ShortcutName</string>
-							</dict>
-							<key>{65, 1}</key>
-							<dict>
-								<key>OutputName</key>
-								<string>Кодированный Base64 файл</string>
-								<key>OutputUUID</key>
-								<string>96E99414-ED8B-4DAD-B716-34BE506AE96E</string>
-								<key>Type</key>
-								<string>ActionOutput</string>
-							</dict>
-						</dict>
-						<key>string</key>
-						<string>shortcuts://import-shortcut?name=￼&amp;url=data:text/shortcut;base64,￼</string>
-					</dict>
-					<key>WFSerializationType</key>
-					<string>WFTextTokenString</string>
-				</dict>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.openurl</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict/>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.choosefrommenu</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
-				<key>WFControlFlowMode</key>
-				<integer>1</integer>
-				<key>WFMenuItemTitle</key>
-				<string>Продолжить</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.choosefrommenu</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>71A4FC47-BD61-46CB-844F-B4A33DAF0549</string>
-				<key>WFControlFlowMode</key>
-				<integer>2</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>WFWorkflowActionIdentifier</key>
-			<string>is.workflow.actions.conditional</string>
-			<key>WFWorkflowActionParameters</key>
-			<dict>
-				<key>GroupingIdentifier</key>
-				<string>DF3685FD-84B8-4950-94B7-07D084DF68D4</string>
-				<key>WFControlFlowMode</key>
-				<integer>2</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1053,6 +1260,7 @@ completion(json);</string>
 	<key>WFWorkflowInputContentItemClasses</key>
 	<array>
 		<string>WFSafariWebPageContentItem</string>
+		<string>WFURLContentItem</string>
 	</array>
 	<key>WFWorkflowMinimumClientVersion</key>
 	<integer>467</integer>
