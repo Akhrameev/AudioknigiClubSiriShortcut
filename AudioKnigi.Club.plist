@@ -735,7 +735,7 @@ Source: https://github.com/Akhrameev/AudioknigiClubSiriShortcut</string>
 				<key>UUID</key>
 				<string>DF4FCE25-CA25-4744-9616-9E81899334BD</string>
 				<key>WFJavaScript</key>
-				<string>var gotPlayer = document.getElementsByClassName("plyr")[0];
+				<string>
 var playlistItems = document.getElementsByClassName("chapter__default");
 var bookTitle = document.title;
 bookTitle = bookTitle.replace(". Слушать аудиокнигу онлайн", "");
@@ -744,24 +744,32 @@ var items = [];
 var min = 0;
 var i = 0;
 var max = 1000;
+var audioSrc = "";
 for (let item of playlistItems) {
   i++;
 
-if (item.clientHeight == 0){continue;}
+  if (item.clientHeight == 0){continue;}
 
-if (i &lt; min){continue;}
-if (i &gt; max){continue;}
+  if (i &lt; min){continue;}
+  if (i &gt; max){continue;}
 
   item.click();
 
+  var gotPlayer = document.getElementsByClassName("plyr")[0];
   var audio = gotPlayer.getElementsByTagName("audio")[0];
-  items.push({"title": audio.title, "url":audio.src});
+  
+  var audioSrcNew = decodeURIComponent(audio.src);
+  if (audioSrcNew == audioSrc){continue;}
+  audioSrc = audioSrcNew;
+  
+  var audioTitle = audio.title + "_" + i;
+
+  items.push({"title": audioTitle, "url":audio.src});
 }
 
 var result = {"bookTitle": bookTitle, "items": items};
 
-var json = 
-JSON.stringify(result);
+var json = JSON.stringify(result);
 
 
 var playerBottom = document.getElementsByClassName("book--bottom")[0];
